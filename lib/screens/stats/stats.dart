@@ -35,7 +35,7 @@ class _StatsScreenState extends State<StatsScreen> {
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(12)),
               ),
-              child: CategoryPieChart(widget.categories),
+              child: CategoryPieChart(widget.categories.where((cat) => cat.type == 'Expense').toList()),
             )
           ],
         ),

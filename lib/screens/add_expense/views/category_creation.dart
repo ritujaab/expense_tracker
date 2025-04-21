@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 import '../../../data/data.dart';
 import '../blocs/create_category/create_category_bloc.dart';
 
-getCategoryCreation(BuildContext context) {
+getCategoryCreation(BuildContext context, expenseType) {
 
   return showDialog(
     context: context,
@@ -111,7 +111,6 @@ getCategoryCreation(BuildContext context) {
                             padding: const EdgeInsets.all(8.0),
                             child: GridView.builder(
                               shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
                               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 4,
                                 mainAxisSpacing: 5,
@@ -244,6 +243,7 @@ getCategoryCreation(BuildContext context) {
                                 category.name = categoryNameController.text;
                                 category.icon = selectedIcon;
                                 category.color = categoryColour;
+                                category.type = expenseType;
                               });
                               context.read<CreateCategoryBloc>().add(CreateCategory(category));
                             },

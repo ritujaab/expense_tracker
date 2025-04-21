@@ -98,15 +98,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )
                           )
                       );
-
-                      if(list[0] != null) {
+                      debugPrint("Returned values from AddExpense: $list");
+                      if(list[0]) {
                         setState(() {
-                          expensesState.expenses.insert(0, list[0]);
+                          context.read<GetExpensesBloc>().add(GetExpenses());
                         });
                       }
-                      if(list[1] != Category.empty) {
+                      if(list[1]) {
                         setState(() {
-                          categoriesState.categories.insert(0, list[1]);
+                          context.read<GetCategoriesBloc>().add(GetCategories());
                         });
                       }
                     },

@@ -9,13 +9,15 @@ class Category {
   double totalExpenses;
   String icon;
   String color;
+  String type;
 
   Category({
     required this.categoryId,
     required this.name,
     required this.totalExpenses,
     required this.icon,
-    required this.color
+    required this.color,
+    required this.type
   });
 
   static final empty = Category(
@@ -23,7 +25,8 @@ class Category {
       name: '',
       totalExpenses: 0,
       icon: '',
-      color: Colors.white.toString()
+      color: Colors.white.toString(),
+      type: ''
   );
 
   CategoryEntity toEntity() {
@@ -33,6 +36,7 @@ class Category {
       totalExpenses: totalExpenses,
       icon: icon,
       color: color,
+      type: type
     );
   }
 
@@ -43,6 +47,7 @@ class Category {
       totalExpenses: entity.totalExpenses,
       icon: entity.icon,
       color: entity.color,
+      type: entity.type
     );
   }
 }

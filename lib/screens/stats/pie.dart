@@ -38,7 +38,7 @@ class _CategoryPieChartState extends State<CategoryPieChart> {
           ),
           borderData: FlBorderData(show: false),
           sectionsSpace: 0,
-          centerSpaceRadius: 0,
+          centerSpaceRadius: 70,
           sections: _generateSections(),
         ),
       ),
@@ -53,8 +53,8 @@ class _CategoryPieChartState extends State<CategoryPieChart> {
     return List.generate(widget.categories.length, (i) {
       final category = widget.categories[i];
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 18.0 : 10.0;
-      final radius = isTouched ? 110.0 : 170.0;
+      final fontSize = isTouched ? 22.0 : 20.0;
+      final radius = isTouched ? 110.0 : 100.0;
 
       final percent = (category.totalExpenses / total) * 100;
 
@@ -92,6 +92,7 @@ class _CategoryPieChartState extends State<CategoryPieChart> {
             ]
         ),
         badgePositionPercentageOffset: .98,
+        borderSide: const BorderSide(color: Colors.black),
       );
     });
   }

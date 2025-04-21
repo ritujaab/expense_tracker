@@ -4,13 +4,15 @@ class CategoryEntity {
   double totalExpenses;
   String icon;
   String color;
+  String type;
 
   CategoryEntity({
     required this.categoryId,
     required this.name,
     required this.totalExpenses,
     required this.icon,
-    required this.color
+    required this.color,
+    required this.type
   });
 
   Map<String, Object?> toDocument() {
@@ -20,6 +22,7 @@ class CategoryEntity {
       'totalExpenses': totalExpenses,
       'icon': icon,
       'color': color,
+      'type': type
     };
   }
 
@@ -30,6 +33,7 @@ class CategoryEntity {
       totalExpenses: document['totalExpenses'],
       icon: document['icon'],
       color: document['color'],
+      type: document['type']
     );
   }
 }

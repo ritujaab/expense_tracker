@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../data/data.dart';
+import '../../add_expense/views/delete_expense.dart';
 
 class MainScreen extends StatefulWidget {
   final List<Expense> expenses;
@@ -29,7 +30,7 @@ class _MainScreenState extends State<MainScreen> {
   double getTotalExpenses() {
     double total = 0;
     for(var expense in widget.expenses) {
-      if(expense.type == 'Expense') {
+      if(categoryMap[expense.categoryId]?.type == 'Expense') {
         total += expense.amount;
       }
     }
@@ -39,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
   double getTotalIncome() {
     double total = 0;
     for(var expense in widget.expenses) {
-      if(expense.type == 'Income') {
+      if(categoryMap[expense.categoryId]?.type == 'Income') {
         total += expense.amount;
       }
     }
@@ -48,6 +49,9 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<Expense> sortedExpenses = [...widget.expenses];
+    sortedExpenses.sort((a, b) => b.date.compareTo(a.date));
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 10),
@@ -255,88 +259,148 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(height: 20,),
             Expanded(
               child: ListView.builder(
-                itemCount: widget.expenses.length,
+                itemCount: sortedExpenses.length,
                 itemBuilder: (context, int i) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: widget.expenses[i].type == 'Income'
-                              ? Colors.green
-                              : Colors.red
-                        )
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        color: Color(
-                                            int.parse(
-                                              categoryMap[widget.expenses[i].categoryId]!.color.split('(0x')[1].split(')')[0],
-                                              radix: 16,
-                                            )
-                                        ),
-                                        shape: BoxShape.circle
+                    child: GestureDetector(
+                      onTap: () {
+                        showModalBottomSheet(
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                          ),
+                          builder: (BuildContext context) {
+                            return Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  ListTile(
+                                    leading: const Icon(Icons.edit, color: Colors.deepPurple),
+                                    title: const Text(
+                                      "Edit",
+                                      style: TextStyle(
+                                        fontSize: 20
                                       ),
                                     ),
-                                    Icon(
-                                      iconOptions[categoryMap[widget.expenses[i].categoryId]!.icon],
-                                      color: Colors.white,
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(width: 12,),
-                                Text(
-                                  categoryMap[widget.expenses[i].categoryId]!.name,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Theme.of(context).colorScheme.onBackground,
-                                    fontWeight: FontWeight.w500,
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      // TODO: Navigate to edit screen or show edit form
+                                    },
                                   ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      "${widget.expenses[i].type == 'Income' ? "+" : "-"} ₹${widget.expenses[i].amount.toString()}",
+                                  ListTile(
+                                    leading: const Icon(Icons.delete, color: Colors.red),
+                                    title: const Text(
+                                      "Delete",
                                       style: TextStyle(
-                                        fontSize: 14,
-                                        color: Theme.of(context).colorScheme.onBackground,
-                                        fontWeight: FontWeight.w400,
+                                          fontSize: 20
                                       ),
                                     ),
-                                    Text(
-                                      DateFormat('dd/MM/yyyy').format(widget.expenses[i].date) == DateFormat('dd/MM/yyyy').format(DateTime.now())
-                                      ? "Today"
-                                      : DateFormat('dd/MM/yyyy').format(widget.expenses[i].date),
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Theme.of(context).colorScheme.outline,
-                                        fontWeight: FontWeight.w400,
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      getDeleteExpense(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: categoryMap[sortedExpenses[i].categoryId]?.type == 'Income'
+                                ? Colors.green
+                                : Colors.red
+                          )
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Container(
+                                        width: 40,
+                                        height: 40,
+                                        decoration: BoxDecoration(
+                                          color: Color(
+                                              int.parse(
+                                                categoryMap[sortedExpenses[i].categoryId]!.color.split('(0x')[1].split(')')[0],
+                                                radix: 16,
+                                              )
+                                          ),
+                                          shape: BoxShape.circle
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            )
-                          ],
+                                      Icon(
+                                        iconOptions[categoryMap[sortedExpenses[i].categoryId]!.icon],
+                                        color: Colors.white,
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(width: 12,),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        categoryMap[sortedExpenses[i].categoryId]!.name,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Theme.of(context).colorScheme.onBackground,
+                                          fontWeight: FontWeight.w600,
+                                        )
+                                      ),
+                                      Text(
+                                        sortedExpenses[i].remarks,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Theme.of(context).colorScheme.outline,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        "${categoryMap[sortedExpenses[i].categoryId]?.type == 'Income' ? "+" : "-"} ₹${sortedExpenses[i].amount.toString()}",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Theme.of(context).colorScheme.onBackground,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      Text(
+                                        DateFormat('dd/MM/yyyy').format(sortedExpenses[i].date) == DateFormat('dd/MM/yyyy').format(DateTime.now())
+                                        ? "Today"
+                                        : DateFormat('dd/MM/yyyy').format(sortedExpenses[i].date),
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Theme.of(context).colorScheme.outline,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

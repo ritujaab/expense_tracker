@@ -6,8 +6,10 @@ final Map<String, IconData> iconOptions = {
   "Food": Icons.fastfood,
   "Transport": Icons.directions_car,
   "Bills": Icons.receipt,
-  "Health": Icons.healing,
+  "Health": Icons.local_hospital,
   "Travel": CupertinoIcons.airplane,
   "Gift": CupertinoIcons.gift_fill,
+  "Salary": Icons.money,
+  "Drinks": Icons.wine_bar,
   "Other": Icons.more_horiz,
 };
