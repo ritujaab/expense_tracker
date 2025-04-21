@@ -84,4 +84,15 @@ class FirebaseExpenseRepo implements ExpenseRepository {
     }
   }
 
+  @override
+  Future<String> deleteExpense(String expenseId) async {
+    try {
+      await expensesCollection.doc(expenseId).delete();
+      return expenseId;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
 }

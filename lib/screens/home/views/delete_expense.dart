@@ -1,7 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-getDeleteExpense(BuildContext context) {
+import '../blocs/delete_expense/delete_expense_bloc.dart';
+
+
+getDeleteExpense(BuildContext context, deleteExpenseBloc, expenseId) {
   return showDialog(
     context: context,
     builder: (context) {
@@ -29,7 +32,10 @@ getDeleteExpense(BuildContext context) {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Confirm action
+                    deleteExpenseBloc.add(
+                        DeleteExpense(expenseId)
+                    );
+                    Navigator.pop(context);
                   },
                   child: const Text("Confirm"),
                 ),

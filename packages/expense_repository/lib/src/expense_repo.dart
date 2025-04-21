@@ -9,4 +9,5 @@ abstract class ExpenseRepository {
   Future<Category> getCategoryById(String categoryId);
   Future<void> updateCategory(Category category);
   Future<List<Expense>> getExpenses();
+  Future<String> deleteExpense(String expenseId);
 }
