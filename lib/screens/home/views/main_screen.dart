@@ -122,7 +122,7 @@ class _MainScreenState extends State<MainScreen> {
                               ),
                             ),
                             Text(
-                              "Ritujaa",
+                              "User",
                               style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
@@ -163,107 +163,104 @@ class _MainScreenState extends State<MainScreen> {
                       const Text(
                         "Total Balance",
                         style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black
                         ),
                       ),
-                      const SizedBox(height: 12,),
                       Text(
                         "₹${getTotalIncome() - getTotalExpenses()}",
                         style: const TextStyle(
                             fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white
+                            color: Colors.black
                         ),
                       ),
-                      const SizedBox(height: 12,),
+                      const SizedBox(height: 8,),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Row(
-                              children: [
-                                Container(
-                                  width: 25,
-                                  height: 25,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white30,
-                                    shape: BoxShape.circle
-                                  ),
-                                  child: const Center(
-                                    child: Icon(
-                                      CupertinoIcons.arrow_up,
-                                      color: Colors.green,
-                                      size: 12,
-                                    )
-                                  ),
-                                ),
-                                const SizedBox(width: 8,),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "Income",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.white
-                                      ),
-                                    ),
-                                    Text(
-                                      "₹${getTotalIncome()}",
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                  width: 25,
-                                  height: 25,
-                                  decoration: const BoxDecoration(
-                                      color: Colors.white30,
-                                      shape: BoxShape.circle
-                                  ),
-                                  child: const Center(
+                            SizedBox(
+                              width: 110,
+                              height: 60,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const SizedBox(
+                                    height: 30,
+                                    width: 40,
+                                    child: Center(
                                       child: Icon(
-                                        CupertinoIcons.arrow_down,
-                                        color: Colors.red,
-                                        size: 12,
+                                        CupertinoIcons.arrow_up,
+                                        color: Color(0xFF0C850E),
+                                        size: 32,
                                       )
-                                  ),
-                                ),
-                                const SizedBox(width: 8,),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "Expenses",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.white
-                                      ),
                                     ),
-                                    Text(
-                                      "₹${getTotalExpenses().toString()}",
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "Income",
+                                        style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black
+                                        ),
                                       ),
-                                    )
-                                  ],
-                                )
-                              ],
+                                      Text(
+                                        "₹${getTotalIncome()}",
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.black
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 80,),
+                            SizedBox(
+                              width: 120,
+                              height: 60,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const SizedBox(
+                                    width: 30,
+                                    height: 40,
+                                    child: Center(
+                                        child: Icon(
+                                          CupertinoIcons.arrow_down,
+                                          color: Color(0xFF8A2E28),
+                                          size: 32,
+                                        )
+                                    ),
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "Expenses",
+                                        style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black
+                                        ),
+                                      ),
+                                      Text(
+                                        "₹${getTotalExpenses().toString()}",
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.black
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
                             )
                           ],
                         ),
