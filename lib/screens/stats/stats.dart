@@ -28,14 +28,34 @@ class _StatsScreenState extends State<StatsScreen> {
               ),
             ),
             const SizedBox(height: 20,),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(12)),
+            Center(
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 30,
+                    bottom: 30,
+                  ),
+                  child: Column(
+                    children: [
+                      const Text(
+                          "Expenses by Category",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      const SizedBox(height: 20,),
+                      CategoryPieChart(widget.categories.where((cat) => cat.type == 'Expense').toList()),
+                    ],
+                  ),
+                ),
               ),
-              child: CategoryPieChart(widget.categories.where((cat) => cat.type == 'Expense').toList()),
             )
           ],
         ),

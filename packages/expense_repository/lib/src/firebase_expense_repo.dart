@@ -59,6 +59,18 @@ class FirebaseExpenseRepo implements ExpenseRepository {
   }
 
   @override
+  Future<Expense> getExpenseById(String expenseId) async {
+    try {
+      final doc = await expensesCollection.doc(expenseId).get();
+      if (!doc.exists) throw Exception("Expense not found");
+      return Expense.fromEntity(ExpenseEntity.fromDocument(doc.data()!));
+    } catch (e) {
+      log("getExpenseById error: ${e.toString()}");
+      rethrow;
+    }
+  }
+
+  @override
   Future<void> updateCategory(Category category) async {
     try {
       await categoriesCollection
@@ -95,4 +107,15 @@ class FirebaseExpenseRepo implements ExpenseRepository {
     }
   }
 
+  @override
+  Future<void> updateExpense(Expense expense) async {
+    try {
+      await expensesCollection
+          .doc(expense.expenseId)
+          .update(expense.toEntity().toDocument());
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
 }

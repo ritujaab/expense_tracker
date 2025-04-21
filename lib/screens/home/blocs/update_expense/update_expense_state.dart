@@ -1,6 +1,14 @@
 part of 'update_expense_bloc.dart';
 
-@immutable
-sealed class UpdateExpenseState {}
+sealed class UpdateExpenseState extends Equatable{
+  const UpdateExpenseState();
+
+  @override
+  List<Object?> get props => [];
+}
 
 final class UpdateExpenseInitial extends UpdateExpenseState {}
+
+final class UpdateExpenseLoading extends UpdateExpenseState {}
+final class UpdateExpenseFailure extends UpdateExpenseState {}
+final class UpdateExpenseSuccess extends UpdateExpenseState {}

@@ -44,8 +44,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: (value) {
                           setState(() {
                             index = value;
+                            if (value == 1) {
+                              context.read<GetCategoriesBloc>().add(GetCategories());
+                            }
                           });
                         },
+
                         showSelectedLabels: false,
                         showUnselectedLabels: false,
                         elevation: 3,
@@ -100,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     )
                             )
                         );
-                        debugPrint("Returned values from AddExpense: $list");
                         if (list[0]) {
                           setState(() {
                             context.read<GetExpensesBloc>().add(GetExpenses());

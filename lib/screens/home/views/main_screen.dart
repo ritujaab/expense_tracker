@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'package:expense_repository/expense_repository.dart';
+import 'package:expense_tracker/screens/home/views/edit_transaction.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import '../../../data/data.dart';
 import '../blocs/delete_expense/delete_expense_bloc.dart';
+import '../blocs/update_expense/update_expense_bloc.dart';
 import 'delete_expense.dart';
 
 class MainScreen extends StatefulWidget {
@@ -312,9 +314,23 @@ class _MainScreenState extends State<MainScreen> {
                                             fontSize: 20
                                           ),
                                         ),
-                                        onTap: () {
+                                        onTap: () async {
                                           Navigator.pop(context);
-                                          // TODO: show edit form
+                                          var editedExpense = await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  BlocProvider(
+                                                      create: (context) => UpdateExpenseBloc(FirebaseExpenseRepo()),
+                                                      child: EditExpense(expense: sortedExpenses[i], categories: widget.categories)
+                                                  ),
+                                            )
+                                          );
+                                          if(editedExpense != null) {
+                                            setState(() {
+                                              sortedExpenses[i] = editedExpense;
+                                            });
+                                          }
                                         },
                                       ),
                                       ListTile(
